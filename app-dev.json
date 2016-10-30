@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 8080
+  },
+  "dev": {
+    "client": {
+      "port": 8081
+    }
+  },
+  "db": {
+    "type": "mysql",
+    "mysql": {
+      "host": "localhost",
+      "schema": "quaero",
+      "username": "quaero",
+      "password": "quaero"
+    }
+  }
+}

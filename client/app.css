@@ -1,0 +1,47 @@
+:root {
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+body {
+    background: #bdc3c7;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.header-bar {
+    display: flex;
+    width: 100%
+}
+
+.app-header-title {
+    color: blue;
+    font-size: 32px;
+    font-weight: 800;
+    width: 20%;
+}
+
+.app-header-nav {
+    width: 80%;
+    text-decoration: none;
+    color: blue;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+.app-header-nav li {
+    margin-left: 15px;
+    cursor: pointer;
+}
+.app-header-nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.app-main {
+    min-height: 200px;
+}
