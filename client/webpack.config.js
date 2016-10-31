@@ -1,7 +1,11 @@
 var path = require('path');
 
 module.exports = {
-  entry: './main.js',
+  entry: {
+    javascript: './main.js',
+    html: './index.html',
+    css: './app.css'
+  },
   output: {
     path: path.resolve(__dirname, '../public'),
     filename: 'bundle.js',
@@ -19,6 +23,10 @@ module.exports = {
           presets: ['es2015', 'react'],
           plugins: ["transform-object-rest-spread"],
         }
+      },
+      {
+        test: /\.html$|\.css$/,
+        loader: 'file?name=[name].[ext]'
       }
     ]
   }

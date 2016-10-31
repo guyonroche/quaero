@@ -3,6 +3,7 @@
 let path = require('path');
 
 let express = require('express');
+let proxy = require('proxy-middleware');
 let url = require('url');
 let bodyParser = require('body-parser');
 
@@ -22,8 +23,9 @@ app.use(bodyParser.json());
 // API
 app.use('/api', router);
 
-// serve client from public folder
-app.use('/', express.static(path.join(__dirname, 'public')));
+// proxy to client
+console.log(`Proxying client to ${config.dev.client.port}`)
+app.use('/', proxy(url.parse(`http://localhost:${config.dev.client.port}`)));
 
 let server = app.listen(config.server.port, () => {
   console.info(`Express server started at http://localhost:${config.server.port}`);
