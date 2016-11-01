@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 
-import { register, closeModal, setModalData } from '../../actions';
+import { register } from '../../api';
+import { closeModal, setModalData, addModalData, loggedIn } from '../../actions';
 
 class SignupModal extends Component {
   constructor() {
@@ -31,8 +32,10 @@ class SignupModal extends Component {
       }
       
       // all good so go for it
-      store.dispatch(register(username, password));
-      store.dispatch(closeModal());
+      register(username, password)
+        .then(result => store.dispatch(loggedIn(username, result.sid)))
+        .then(() => store.dispatch(closeModal()))
+        .catch(error => store.dispatch(addModalData({error: error.message})))
     };
     
     return (
