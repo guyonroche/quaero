@@ -7,6 +7,24 @@ class SignupModal extends Component {
   constructor() {
     super();
   }
+
+  validate(store, username, password, confirm) {
+    // cheap validation
+    if (!username) {
+      store.dispatch(setModalData({...data, error: 'You must choose a username'}));
+      return false;
+    }
+    if (!password || password.length < 8) {
+      store.dispatch(setModalData({...data, error: 'Password must be at least 8 chars'}));
+      return false;
+    }
+    if (password !== confirm) {
+      store.dispatch(setModalData({...data, error: `Password and confirm don't match`}));
+      return false;
+    }
+
+    return true;
+  }
   
   render() {
     let { store } = this.context;
@@ -19,20 +37,11 @@ class SignupModal extends Component {
       const password = passwordInput.value;
       const confirm = confirmInput.value;
 
-      // cheap validation
-      if (!username) {
-        return store.dispatch(setModalData({...data, error: 'You must choose a username'}));
+      if (this.validate(store, username, password, confirm)) {
+        // all good so go for it
+        store.dispatch(register(username, password));
+        store.dispatch(closeModal());
       }
-      if (!password || password.length < 8) {
-        return store.dispatch(setModalData({...data, error: 'Password must be at least 8 chars'}));
-      }
-      if (password !== confirm) {
-        return store.dispatch(setModalData({...data, error: `Password and confirm don't match`}));
-      }
-      
-      // all good so go for it
-      store.dispatch(register(username, password));
-      store.dispatch(closeModal());
     };
     
     return (
