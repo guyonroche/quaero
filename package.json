@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app",
     "dev-client": "cd client && webpack-dev-server",
-    "dev-server": "node app --dev",
+    "dev-server": "node app-dev",
     "nodemon-server": "nodemon app --dev",
     "test": "echo \"Error: no test specified yet\" && exit 1",
     "build": "cd client && webpack"

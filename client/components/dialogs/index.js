@@ -5,13 +5,22 @@ import SignupModal from './sign-up';
 class Dialogs extends Component {
   constructor() {
     super();
+    this.state = {};
   }
 
-  render() {
-    let { store } = this.context;
+  componentDidMount() {
+    const { store } = this.context;
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState())
+    });
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
-    const state = store.getState();
-    const modal = state.modal;
+
+  render() {
+    const { modal } = this.state;
 
     switch(modal && modal.name) {
       case 'sign-up':
