@@ -5,8 +5,19 @@ import { login, logout, openSignupModal } from '../actions';
 class Header extends Component {
   constructor() {
     super();
+    this.state = {};
   }
-  
+
+  componentDidMount() {
+    const { store } = this.context;
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState())
+    });
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   renderAnon() {
     let { store } = this.context;
     const onLogin = () => {
@@ -53,12 +64,9 @@ class Header extends Component {
   }
 
   render() {
-    let { store } = this.context;
+    const user = this.state.user;
 
-    const state = store.getState();
-    const user = state.user;
-
-    if (user.username) {
+    if (user && user.username) {
       return this.renderLoggedIn(user);
     } else {
       return this.renderAnon();
