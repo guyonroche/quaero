@@ -16,7 +16,7 @@ const parseResponse = response => {
 };
 
 export const register = (username, password) => {
-  return fetch(`/api/user`, {
+  return fetch(`/api/user/register`, {
       method: 'POST',
       body: { username, password },
       headers: STD_HEADERS
