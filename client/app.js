@@ -9,40 +9,21 @@ import Home from './components/home';
 import SignUp from './components/sign-up';
 import Question from './components/question';
 
-class App extends Component {
-  constructor() {
-    super();
-  }
+const App = () => (
+  <div>
+    <Dialogs />
+    
+    <Header />
 
-  componentDidMount() {
-    const {store} = this.context;
-    this.unsubscribe = store.subscribe(() => this.forceUpdate());
-  }
+    <Router history={hashHistory}>
+      <Route path="/" component={Home} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/question/:id" component={Question} />
+    </Router>
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+    <Footer />
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        <Dialogs />
-        
-        <Header />
-
-        <Router history={hashHistory}>
-          <Route path="/" component={Home} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/question/:id" component={Question} />
-        </Router>
-
-        <Footer />
-      </div>
-    );
-  }
-}
-App.contextTypes = {
-  store: React.PropTypes.object
-};
 
 export default App;

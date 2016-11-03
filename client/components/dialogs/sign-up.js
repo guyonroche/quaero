@@ -1,82 +1,75 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import Modal from 'react-modal';
 
-import { register, closeModal, setModalData } from '../../actions';
+import { register } from '../../api';
+import { closeModal, setModalData, addModalData, loggedIn } from '../../actions';
 
-class SignupModal extends Component {
-  constructor() {
-    super();
-  }
+const Signup = props => {
+  let usernameInput, passwordInput, confirmInput;
+  let onSignup = () => {
+    props.onSignup(usernameInput.value, passwordInput.value, confirmInput.value);
+  };
+  const errorMessage = props.error;
+  return (
+    <Modal isOpen={true} contentLabel="Sign Up">
+      <h1>Please enter a username and password</h1>
+      <p>Username:
+        <input
+          type="text"
+          ref={node => usernameInput = node}
+          placeholder="Username" />
+      </p>
+      <p>Password:
+        <input
+          type="password"
+          ref={node => passwordInput = node}
+          placeholder="Password" />
+      </p>
+      <p>Confirm:
+        <input
+          type="password"
+          ref={node => confirmInput = node}
+          placeholder="Password" />
+      </p>
+      {
+        errorMessage ? <h2>{errorMessage}</h2> : null
+      }
+      <p>
+        <button onClick={onSignup}>Sign Up</button>
+      </p>
+    </Modal>
+  );
+};
 
-  validate(store, username, password, confirm) {
+let mapStateToProps = state => ({
+  error: state.modal.data.error
+});
+
+let mapDispatchToProps = dispatch => ({
+  onSignup(username, password, confirm) {
     // cheap validation
     if (!username) {
-      store.dispatch(setModalData({...data, error: 'You must choose a username'}));
-      return false;
+      return dispatch(addModalData({error: 'You must choose a username'}));
     }
     if (!password || password.length < 8) {
-      store.dispatch(setModalData({...data, error: 'Password must be at least 8 chars'}));
-      return false;
+      return dispatch(addModalData({error: 'Password must be at least 8 chars'}));
     }
     if (password !== confirm) {
-      store.dispatch(setModalData({...data, error: `Password and confirm don't match`}));
-      return false;
+      return dispatch(addModalData({error: `Password and confirm don't match`}));
     }
 
-    return true;
+    // all good so go for it
+    register(username, password)
+      .then(result => dispatch(loggedIn(username, result.sid)))
+      .then(() => dispatch(closeModal()))
+      .catch(error => dispatch(addModalData({error: error.message})))
   }
-  
-  render() {
-    let { store } = this.context;
-    const state = store.getState();
-    const data = state.modal.data || {};
-    
-    let usernameInput, passwordInput, confirmInput;
-    let onSignup = () => {
-      const username = usernameInput.value;
-      const password = passwordInput.value;
-      const confirm = confirmInput.value;
+});
 
-      if (this.validate(store, username, password, confirm)) {
-        // all good so go for it
-        store.dispatch(register(username, password));
-        store.dispatch(closeModal());
-      }
-    };
-    
-    return (
-      <Modal isOpen={true} contentLabel="Sign Up">
-        <h1>Please enter a username and password</h1>
-        <p>Username: 
-          <input
-            type="text"
-            ref={node => usernameInput = node}
-            placeholder="Username" />
-        </p>
-        <p>Password: 
-          <input
-            type="password"
-            ref={node => passwordInput = node}
-            placeholder="Password" />
-        </p>
-        <p>Confirm: 
-          <input
-            type="password"
-            ref={node => confirmInput = node}
-            placeholder="Password" />
-        </p>
-        {
-          data.error ? <h2>{data.error}</h2> : null
-        }
-        <p>
-          <button onClick={onSignup}>Sign Up</button>
-        </p>
-      </Modal>
-    );
-  }
-}
-SignupModal.contextTypes = {
-  store: React.PropTypes.object
-};
+let SignupModal = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signup);
 
 export default SignupModal;
