@@ -6,7 +6,7 @@ import Header from './components/header';
 import Footer from './components/footer';
 
 import Home from './components/home';
-import SignUp from './components/sign-up';
+import Profile from './components/profile';
 import Question from './components/question';
 
 const App = () => (
@@ -17,7 +17,7 @@ const App = () => (
 
     <Router history={hashHistory}>
       <Route path="/" component={Home} />
-      <Route path="/signup" component={SignUp} />
+      <Route path="/profile" component={Profile} />
       <Route path="/question/:id" component={Question} />
     </Router>
 

@@ -1,6 +1,35 @@
 import React, { Component } from 'react';
 
-import { login, logout, openSignupModal } from '../actions';
+import { openModal, loggedOut } from '../actions';
+import { logout } from '../api';
+
+const AnonHeader = ({onSignup, onLogin}) => (
+  <div className="header-bar">
+    <div className="app-header-title">Quaero</div>
+    <nav className="app-header-nav">
+      <ul>
+        <li onClick={onSignup}>Sign Up</li>
+        <li onClick={onLogin}>Log In</li>
+        <li>Help</li>
+        <li><input type="text" placeholder="Search"/></li>
+      </ul>
+    </nav>
+  </div>
+);
+
+const LoggedInHeader = ({user, onLogout}) => (
+  <div className="header-bar">
+    <div className="app-header-title">Quaero</div>
+    <nav className="app-header-nav">
+      <ul>
+        <li>{user.username}</li>
+        <li onClick={onLogout}>Log Out</li>
+        <li>Help</li>
+        <li><input type="text" placeholder="Search"/></li>
+      </ul>
+    </nav>
+  </div>
+);
 
 class Header extends Component {
   constructor() {
@@ -18,58 +47,29 @@ class Header extends Component {
     this.unsubscribe();
   }
 
-  renderAnon() {
-    let { store } = this.context;
-    const onLogin = () => {
-      store.dispatch(login());
-    };
-    const onSignup = () => {
-      store.dispatch(openSignupModal());
-    };
-
-    return (
-      <div className="header-bar">
-        <div className="app-header-title">Quaero</div>
-        <nav className="app-header-nav">
-          <ul>
-            <li onClick={onSignup}>Sign Up</li>
-            <li onClick={onLogin}>Log In</li>
-            <li>Help</li>
-            <li><input type="text" placeholder="Search"/></li>
-          </ul>
-        </nav>
-      </div>
-    );
-  }
-
-  renderLoggedIn(user) {
-    let { store } = this.context;
-    const onLogout = () => {
-      store.dispatch(logout());
-    };
-
-    return (
-      <div className="header-bar">
-        <div className="app-header-title">Quaero</div>
-        <nav className="app-header-nav">
-          <ul>
-            <li>{user.username}</li>
-            <li onClick={onLogout}>Log Out</li>
-            <li>Help</li>
-            <li><input type="text" placeholder="Search"/></li>
-          </ul>
-        </nav>
-      </div>
-    );
-  }
-
   render() {
-    const user = this.state.user;
+    const { store } = this.context;
+    const { user } = this.state;
 
     if (user && user.username) {
-      return this.renderLoggedIn(user);
+      const onLogout = () => {
+        logout()
+          .then(() => store.dispatch(loggedOut()))
+      };
+
+      return (
+        <LoggedInHeader
+          user={user}
+          onLogout={onLogout}
+        />
+      );
     } else {
-      return this.renderAnon();
+      return (
+        <AnonHeader
+          onSignup={() => store.dispatch(openModal('sign-up'))}
+          onLogin={() => store.dispatch(openModal('login'))}
+        />
+      );
     }
   }
 }

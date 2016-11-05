@@ -1,10 +1,10 @@
 import * as api from '../api';
 
-export const loggedIn = (username, sid) => ({
+export const loggedIn = (username) => ({
   type: 'LOGGED_IN',
-  user: { username, sid }
+  user: { username }
 });
-export const logout = () => ({
+export const loggedOut = () => ({
   type: 'LOGGED_OUT'
 });
 export const closeModal = () => ({
@@ -19,6 +19,7 @@ export const addModalData = (data) => ({
   data
 });
 
-export const openSignupModal = () => ({
-  type: 'OPEN_SIGNUP_MODAL'
+export const openModal = name => ({
+  type: 'OPEN_MODAL',
+  name
 });

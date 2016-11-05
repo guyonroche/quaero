@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import SignupModal from './sign-up';
+import LoginModal from './login';
 
 class Dialogs extends Component {
   constructor() {
@@ -25,6 +26,8 @@ class Dialogs extends Component {
     switch(modal && modal.name) {
       case 'sign-up':
         return <SignupModal />
+      case 'login':
+        return <LoginModal />
       default:
         return null;
     }

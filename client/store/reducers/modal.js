@@ -1,12 +1,15 @@
 
 const modal = (state = {name: null, data: {}}, action) => {
   switch (action.type) {
-    case 'OPEN_SIGNUP_MODAL':
+    case 'OPEN_MODAL':
       return {
-        name: 'sign-up',
+        name: action.name,
         data: {},
       };
-    
+
+    case 'CLOSE_MODAL':
+      return {data: {}};
+
     case 'SET_MODAL_DATA':
       return {
         ...state,
@@ -21,9 +24,6 @@ const modal = (state = {name: null, data: {}}, action) => {
           ...action.data,
         }
       };
-
-    case 'CLOSE_MODAL':
-      return {data: {}};
 
     default:
       return state;
