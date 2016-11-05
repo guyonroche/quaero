@@ -34,7 +34,7 @@ let LoginModal = (function() {
   };
 
   let mapStateToProps = state => ({
-    error: state.modal.data.error
+    errorMessage: state.modal.data.error
   });
 
   let mapDispatchToProps = dispatch => ({

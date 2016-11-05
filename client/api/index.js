@@ -11,10 +11,27 @@ const STD_HEADERS = {
 let sid = undefined;
 
 const parseResponse = response => {
-  if (response.status >= 400) {
-    throw new Error('Bad Response from server' + response.status);
-  } else {
-    return response.json();
+  return response.json()
+    .then(json => {
+      if (response.status >= 400) {
+        throw new Error(json.error);
+      } else {
+        return json;
+      }
+    }, error => {
+      throw new Error('Something went wrong');
+    });
+
+  try {
+    const json = response.json();
+    if (response.status >= 400) {
+      throw new Error(json.error);
+    } else {
+      return json;
+    }
+  }
+  catch(error) {
+    throw new Error('Something went wrong');
   }
 };
 
@@ -29,7 +46,7 @@ const fch = (url, method, headers, body) => {
       headers: { ...STD_HEADERS, ...headers }
     })
     .then(parseResponse);
-}
+};
 
 export const register = (username, password) => {
   return fch(`/api/user/register`, 'POST', { username, password })
@@ -44,7 +61,7 @@ export const login = (username, password) => {
 };
 
 export const logout = () => {
-  return fch(`/api/user/logout`, 'POST', {sid})
+  return fch(`/api/user/logout`, 'POST', {sid}, undefined)
     .then(() => sid = undefined);
 };
 
