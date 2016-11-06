@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import QuestionList from './question-list';
+import QuestionPanel from './question-panel';
 import AskPanel from './ask-panel';
 import SearchPanel from './search-panel';
 
@@ -24,10 +24,10 @@ const Home = props => {
         </TabList>
 
         <TabPanel>
-          <QuestionList store={store} type="top" />
+          <QuestionPanel store={store} type="top" />
         </TabPanel>
         <TabPanel>
-          <QuestionList store={store} type="recent" />
+          <QuestionPanel store={store} type="recent" />
         </TabPanel>
         <TabPanel>
           <SearchPanel store={store} />

@@ -45,3 +45,39 @@ body {
 .app-main {
     min-height: 200px;
 }
+
+.form-row {
+    width: 800px;
+    float: left;
+    clear: left;
+}
+
+.form-label {
+    float: left;
+    width: 150px;
+    height: 30px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.form-input {
+    float: left;
+    width: 630px;
+}
+.form-full-row {
+    float: left;
+    width: 800px;
+}
+
+.form-element {
+    width: 100%;
+}
+
+.form-text {
+    min-height: 100px;
+}
+
+.form-right {
+    float: right;
+}

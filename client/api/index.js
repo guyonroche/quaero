@@ -18,7 +18,7 @@ const parseResponse = response => {
       } else {
         return json;
       }
-    }, error => {
+    }, () => {
       throw new Error('Something went wrong');
     });
 

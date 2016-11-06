@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { login, logout } from '../actions';
 
-class QuestionList extends Component {
+class QuestionPanel extends Component {
   constructor() {
     super();
   }
@@ -21,8 +21,8 @@ class QuestionList extends Component {
     );
   }
 }
-QuestionList.contextTypes = {
+QuestionPanel.contextTypes = {
   store: React.PropTypes.object
 };
 
-export default QuestionList;
+export default QuestionPanel;

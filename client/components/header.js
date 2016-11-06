@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Container from './utils/container';
 
 import { openModal, loggedOut } from '../actions';
 import { logout } from '../api';
@@ -31,22 +32,11 @@ const LoggedInHeader = ({user, onLogout}) => (
   </div>
 );
 
-class Header extends Component {
+class Header extends Container {
   constructor() {
     super();
-    this.state = {};
   }
-
-  componentDidMount() {
-    const { store } = this.context;
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState())
-    });
-  }
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
+  
   render() {
     const { store } = this.context;
     const { user } = this.state;
