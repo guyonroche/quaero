@@ -13,6 +13,8 @@ const Home = props => {
 
   let { store } = props;
 
+  // Cool UX - to view a question, add a tab for it here!!!
+  // store list of 'watched' questions on user info in svr
   return (
     <div className="app-main">
       <Tabs onSelect={handleSelect} selectedIndex={0}>

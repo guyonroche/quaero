@@ -18,3 +18,23 @@ CREATE TABLE `quaero_session` (
   `user_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC));
+
+
+CREATE TABLE `question` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `quid` VARCHAR(32) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `user_id` BIGINT NOT NULL,
+  `title` VARCHAR(128) NOT NULL,
+  `text` TEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `title_UNIQUE` (`title`),
+  UNIQUE KEY `quid_UNIQUE` (`quid`)
+);
+
+CREATE TABLE `quaero`.`question_tags` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `question_id` BIGINT NOT NULL,
+  `tag` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `tag_idx` (`tag` ASC));

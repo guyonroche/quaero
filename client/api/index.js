@@ -25,6 +25,8 @@ const parseResponse = response => {
   try {
     const json = response.json();
     if (response.status >= 400) {
+      let error = new Error(json.error);
+      error.status = response.status;
       throw new Error(json.error);
     } else {
       return json;
@@ -62,6 +64,14 @@ export const login = (username, password) => {
 
 export const logout = () => {
   return fch(`/api/user/logout`, 'POST', {sid}, undefined)
-    .then(() => sid = undefined);
+    .then(() => sid = undefined)
+    .catch(error => {
+      if (error.status === 401) {
+        // if already not logged in, no problem
+        return;
+      } else {
+        throw error;
+      }
+    });
 };
 
