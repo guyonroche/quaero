@@ -19,7 +19,7 @@ const AskForm = ({onPost}) => {
   return (
     <div>
       <fieldset>
-        <legend> Ask a New Question </legend>
+        <legend>Ask a New Question</legend>
         <div className="form-row">
           <div className="form-label">
             <label className="form-element" for="ask-title">Title:</label>
@@ -57,6 +57,14 @@ class AskPanel extends Container {
 
     const state = store.getState();
     const user = state.user;
+
+    let onPost = (title, tags, text) => {
+      title = title.trim();
+      tags = tags.split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag);
+      text = text.trim();
+    };
 
     return user.username ?
     <AskForm onPost={() => alert('nice post')} /> :

@@ -32,9 +32,11 @@ CREATE TABLE `question` (
   UNIQUE KEY `quid_UNIQUE` (`quid`)
 );
 
-CREATE TABLE `quaero`.`question_tags` (
+CREATE TABLE `question_tags` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `question_id` BIGINT NOT NULL,
   `tag` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tag_idx` (`tag` ASC));
+  UNIQUE KEY `qt_idx` (`tag`,`question_id`),
+  KEY `quid` (`question_id`)
+);
