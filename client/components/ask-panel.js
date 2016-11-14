@@ -14,8 +14,12 @@ const UserWall = ({onSignup, onLogin}) => (
   </div>
 );
 
-const AskForm = ({onPost}) => {
+const AskForm = ({onPost, errors}) => {
   let title, tags, text;
+
+  // errors may contain specific validation errors itemised to each field
+  // if errors && specific error, then display field appropriately
+
   return (
     <div>
       <fieldset>
@@ -50,24 +54,39 @@ const AskForm = ({onPost}) => {
 class AskPanel extends Container {
   constructor() {
     super();
+    
+    this.onPost = this.onPost.bind(this);
+  }
+
+  xform(previous, redux) {
+    // want to store both redux state and local form state
+    return previous ?
+      { form: previous.form, redux} :
+      { form: {}, redux};
+  }
+  
+  onPost(title, tags, text) {
+    // bit of cleanup and xform
+    title = title.trim();
+    tags = tags.split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag);
+    text = text.trim();
+    
+    // validation => move validation to own method
+    // if error(s) found then set state with errors
+    // will want to listen to onChange events to set/clear validation
+    
+    // API call and action!
   }
 
   render() {
-    let { store } = this.context;
 
     const state = store.getState();
     const user = state.user;
 
-    let onPost = (title, tags, text) => {
-      title = title.trim();
-      tags = tags.split(',')
-        .map(tag => tag.trim())
-        .filter(tag => tag);
-      text = text.trim();
-    };
-
     return user.username ?
-    <AskForm onPost={() => alert('nice post')} /> :
+      <AskForm onPost={this.onPost}  /> :
       <UserWall
         onSignup={() => store.dispatch(openModal('sign-up'))}
         onLogin={() => store.dispatch(openModal('login'))} />;
