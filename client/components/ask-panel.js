@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Container from './utils/container';
+import FormContainer from './utils/form-container';
 
 import { openModal } from '../actions';
 
@@ -56,13 +56,6 @@ class AskPanel extends Container {
     super();
     
     this.onPost = this.onPost.bind(this);
-  }
-
-  xform(previous, redux) {
-    // want to store both redux state and local form state
-    return previous ?
-      { form: previous.form, redux} :
-      { form: {}, redux};
   }
   
   onPost(title, tags, text) {
