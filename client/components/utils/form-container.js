@@ -19,4 +19,4 @@ class FormContainer extends Container {
   }
 }
 
-export default Container;
+export default FormContainer;
