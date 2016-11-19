@@ -63,8 +63,16 @@ body {
 
 .form-input {
     float: left;
-    width: 630px;
+    width: 610px;
 }
+.form-error {
+    color: red;
+    font-weight: bold;
+}
+.form-error-box {
+    padding: 5px;
+}
+
 .form-full-row {
     float: left;
     width: 800px;

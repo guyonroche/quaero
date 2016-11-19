@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 
 class Container extends Component {
-  constructor() {
+  constructor(xform) {
     super();
-    this.state = this.xform(undefined, {});
-  }
-  
-  xform(previous, state) {
-    return state;
+    
+    this.xform = xform || ((previous, state) => state);
   }
 
+  componentWillMount() {
+    const {store} = this.context;
+    this.state = this.xform(undefined, store.getState());
+  }
+  
   componentDidMount() {
     const {store} = this.context;
     this.unsubscribe = store.subscribe(() => {

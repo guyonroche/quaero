@@ -3,16 +3,13 @@ import Container from './container';
 
 class FormContainer extends Container {
   constructor() {
-    super();
+    const xform = (previous, redux) => previous ?
+      { form: previous.form, redux} :
+      { form: {}, redux};
+
+    super(xform);
   }
 
-  xform(previous, redux) {
-    // want to store both redux state and local form state
-    return previous ?
-    { form: previous.form, redux} :
-    { form: {}, redux};
-  }
-  
   setFormState(form) {
     const redux = this.state.redux;
     this.setState({form, redux});
