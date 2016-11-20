@@ -38,7 +38,7 @@ const parseResponse = response => {
 };
 
 const fch = (url, method, headers, body) => {
-  if (arguments.length === 3) {
+  if (body === undefined) {
     body = headers;
     headers = undefined;
   }
@@ -75,3 +75,6 @@ export const logout = () => {
     });
 };
 
+export const ask = (title, tags, text) => {
+  return fch(`/api/ask`, 'POST', {sid}, {title, tags, text})
+};

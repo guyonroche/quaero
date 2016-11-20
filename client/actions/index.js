@@ -23,3 +23,13 @@ export const openModal = name => ({
   type: 'OPEN_MODAL',
   name
 });
+
+export const showQuestion = question => ({
+  type: 'SHOW_QUESTION',
+  question
+});
+
+export const hideQuestion = quid => ({
+  type: 'HIDE_QUESTION',
+  quid
+});

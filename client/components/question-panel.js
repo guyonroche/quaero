@@ -8,15 +8,10 @@ class QuestionPanel extends Component {
   }
 
   render() {
-    let { type } = this.props;
-    let { store } = this.context;
-
-    const state = store.getState();
-    const user = state.user;
 
     return (
       <div className="question-list">
-        List of {type} questions go here
+        Question details go here
       </div>
     );
   }

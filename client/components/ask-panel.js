@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import FormContainer from './utils/form-container';
 
-import { openModal } from '../actions';
+import { ask } from '../api';
+import { openModal, showQuestion } from '../actions';
 
 const UserWall = ({onSignup, onLogin}) => (
   <div>
@@ -24,8 +25,8 @@ const AskForm = ({onPost, onValidate, titleError, textError, postError}) => {
   let post = () => {
     onPost(
       fields.title.value.trim(),
-      fields.tags.value.trim(),
-      fields.text.value.trim()
+      fields.tags.value.split(',').map(tag=> tag.trim()),
+      fields.text.value.trim(),
     );
   };
 
@@ -92,7 +93,6 @@ class AskPanel extends FormContainer {
       case 'text':
         return setState('textError', value ? null : 'You must include a question');
     }
-
   }
   
   onPost(title, tags, text) {
@@ -102,15 +102,16 @@ class AskPanel extends FormContainer {
     if (titleOk && textOk) {
       // API call and actions go here
       this.setFormState({...this.state.form, postError: null});
-
+      ask(title, tags, text)
+        .then(({quid}) => {
+          showQuestion({quid, title, tags, text});
+        });
     } else {
       this.setFormState({
         ...this.state.form,
         postError: 'Fix the error(s) above'
       });
     }
-
-    // API call and action!
   }
   
   onSignup() {
