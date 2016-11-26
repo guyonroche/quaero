@@ -10,4 +10,6 @@ const app = combineReducers({
   questions
 });
 
+// TODO: need list of top and recent questions - with simple fetch and replace
+
 export default app;

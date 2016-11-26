@@ -33,3 +33,9 @@ export const hideQuestion = quid => ({
   type: 'HIDE_QUESTION',
   quid
 });
+
+export const updateQuestionList = (listType, questions) => ({
+  type: 'RECEIVED_QUESTIONS',
+  listType,
+  questions
+});

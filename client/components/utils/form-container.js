@@ -4,7 +4,7 @@ import Container from './container';
 class FormContainer extends Container {
   constructor() {
     const xform = (previous, redux) => previous ?
-      { form: previous.form, redux} :
+      { form: previous.form || {}, redux} :
       { form: {}, redux};
 
     super(xform);

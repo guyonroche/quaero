@@ -8,10 +8,19 @@ class QuestionPanel extends Component {
   }
 
   render() {
+    const { question } = this.props;
 
     return (
-      <div className="question-list">
-        Question details go here
+      <div>
+        <h1 className="question-header">{question.title}</h1>
+        <div className="question-post">{question.text}</div>
+        <div className="question-tags">
+          {
+            question.tags.map(tag => (
+              <div className="question-tag">{tag}</div>
+            ))
+          }
+        </div>
       </div>
     );
   }

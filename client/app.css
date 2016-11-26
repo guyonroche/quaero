@@ -89,3 +89,20 @@ body {
 .form-right {
     float: right;
 }
+
+.question-header {
+    border-bottom: 1px solid black;
+}
+.question-post {
+    white-space: pre-wrap;
+}
+.question-tags {
+
+}
+.question-tag {
+    background: #536364;
+    border: 1px solid #303434;
+    cursor: pointer;
+    margin: 5px;
+    display: inline;
+}

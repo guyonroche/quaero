@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
+import Container from './utils/container';
+import { query } from '../api';
+import { updateQuestionList } from '../actions';
 
-import { login, logout } from '../actions';
-
-class QuestionsPanel extends Component {
+class QuestionsPanel extends Container {
   constructor() {
     super();
   }
 
-  render() {
-    let { type } = this.props;
-    let { store } = this.context;
+  componentWillMount() {
+    const {store} = this.context;
+    const { type } = this.props;
+    if (!this.state[type]) {
+      query(type)
+        .then(questions => {
+          store.dispatch(updateQuestionList(type, questions));
+        });
+    }
+  }
 
-    const state = store.getState();
-    const user = state.user;
+  render() {
+    const { type } = this.props;
+    const questions = this.state[type];
+
+    if (!questions) {
+      return <div className="question-list">
+        Loading {type} questions...
+      </div>
+    }
 
     return (
       <div className="question-list">

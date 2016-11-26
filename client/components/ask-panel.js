@@ -15,7 +15,7 @@ const UserWall = ({onSignup, onLogin}) => (
   </div>
 );
 
-const AskForm = ({onPost, onValidate, titleError, textError, postError}) => {
+const AskForm = ({onPost, onValidate, titleError, textError, formError}) => {
   let fields = {};
 
   let validate = name => () => {
@@ -36,7 +36,7 @@ const AskForm = ({onPost, onValidate, titleError, textError, postError}) => {
         <legend>Ask a New Question</legend>
         <div className="form-row">
           <div className="form-label">
-            <label className="form-element" for="ask-title">Title:</label>
+            <label className="form-element" htmlFor="ask-title">Title:</label>
           </div>
           <div className={`form-input ${titleError ? 'form-error-box' : ''}`}>
             <input onChange={validate('title')} className="form-element" ref={node => fields.title=node} id="ask-title" type="text"/>
@@ -45,7 +45,7 @@ const AskForm = ({onPost, onValidate, titleError, textError, postError}) => {
         </div>
         <div className="form-row">
           <div className="form-label">
-            <label className="form-element" for="ask-tags">Tags:</label>
+            <label className="form-element" htmlFor="ask-tags">Tags:</label>
           </div>
           <div className="form-input">
             <input className="form-element" ref={node => fields.tags=node} id="ask-tags" type="text"/>
@@ -57,7 +57,7 @@ const AskForm = ({onPost, onValidate, titleError, textError, postError}) => {
         </div>
         <div className="form-full-row">
           <button className="form-right" onClick={post}>Post</button>
-          { postError ? <div className="form-right form-error-box">{postError}</div> : null }
+          { formError ? <div className="form-right form-error-box">{formError}</div> : null }
         </div>
       </fieldset>
     </div>
@@ -73,44 +73,68 @@ class AskPanel extends FormContainer {
     this.onSignup = this.onSignup.bind(this);
     this.onLogin = this.onLogin.bind(this);
   }
+
+  setValidationState(state, name, value) {
+    if (state[name] !== value) {
+      return {
+        ...state,
+        [name]: value
+      };
+    } else {
+      return state;
+    }
+  }
+
+  validateTitle(state, title) {
+    return this.setValidationState(state, 'titleError', title ? null : 'You must specify a title');
+  }
+  validateTags(state) {
+    return state;
+  }
+  validateText(state, text) {
+    return this.setValidationState(state, 'textError', text ? null : 'You must include a question');
+  }
+  validateForm(state) {
+    return this.setValidationState(
+      state,
+      'formError',
+      state.titleError || state.textError ? 'Fix the error(s) above' : null
+    );
+  }
   
   onValidatePost(name, value) {
-    let newFormState = {
-      ...this.state.form
-    };
-
-    let setState = (type, message) => {
-      if (newFormState[type] !== message) {
-        newFormState[type] = message;
-        this.setFormState(newFormState);
-      }
-      return newFormState[type] === null;
-    };
+    let form = this.state.form;
 
     switch(name) {
       case 'title':
-        return setState('titleError', value ? null : 'You must specify a title');
+        form = this.validateTitle(form, value);
+        break;
       case 'text':
-        return setState('textError', value ? null : 'You must include a question');
+        form = this.validateText(form, value);
+        break;
+    }
+
+    if (form !== this.state.form) {
+      this.setFormState(form);
     }
   }
   
   onPost(title, tags, text) {
-    let titleOk = this.onValidatePost('title', title);
-    let textOk = this.onValidatePost('text', text);
+    let form = this.state.form;
+    form = this.validateTitle(form, title);
+    form = this.validateText(form, text);
+    form = this.validateForm(form);
 
-    if (titleOk && textOk) {
-      // API call and actions go here
-      this.setFormState({...this.state.form, postError: null});
+    if (form !== this.state.form) {
+      this.setFormState(form);
+    }
+
+    if (!form.formError) {
       ask(title, tags, text)
         .then(({quid}) => {
-          showQuestion({quid, title, tags, text});
+          const {store} = this.context;
+          store.dispatch(showQuestion({quid, title, tags, text}));
         });
-    } else {
-      this.setFormState({
-        ...this.state.form,
-        postError: 'Fix the error(s) above'
-      });
     }
   }
   
@@ -124,8 +148,6 @@ class AskPanel extends FormContainer {
   }
 
   render() {
-    const {store} = this.context;
-
     const {form, redux} = this.state;
     const user = redux.user;
 
