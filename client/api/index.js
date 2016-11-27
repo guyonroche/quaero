@@ -79,6 +79,6 @@ export const ask = (title, tags, text) => {
   return fch(`/api/ask`, 'POST', {sid}, {title, tags, text})
 };
 
-export const query = (type) => {
-  return fch(`/api/query/${type}`);
+export const getList = (type) => {
+  return fch(`/api/list/${type}`);
 };

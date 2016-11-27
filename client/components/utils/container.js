@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+// A Container component is one that reacts to and controls Redux state
+// This base class subscribes to the store state.
+// Derived classes can supply a transform to restructure the state if it needs
+// to be extended.
+
 class Container extends Component {
   constructor(xform) {
     super();

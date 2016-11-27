@@ -93,6 +93,15 @@ body {
 .question-header {
     border-bottom: 1px solid black;
 }
+.question-title {
+    font-size: larger;
+    font-weight: bold;
+    display: inline;
+}
+.question-close {
+    display: inline;
+    float: right;
+}
 .question-post {
     white-space: pre-wrap;
 }

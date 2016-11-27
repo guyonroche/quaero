@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 
-import { login, logout } from '../actions';
+import { hideQuestion } from '../actions';
 
 class QuestionPanel extends Component {
   constructor() {
     super();
+
+    this.onClose = this.onClose.bind(this);
+  }
+
+  onClose() {
+    const {store} = this.context;
+    const { question } = this.props;
+    store.dispatch(hideQuestion(question.quid));
   }
 
   render() {
@@ -12,7 +20,10 @@ class QuestionPanel extends Component {
 
     return (
       <div>
-        <h1 className="question-header">{question.title}</h1>
+        <div className="question-header">
+          <div className="question-title">{question.title}</div>
+          <div className="question-close">X</div>
+        </div>
         <div className="question-post">{question.text}</div>
         <div className="question-tags">
           {

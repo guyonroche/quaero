@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Container from './utils/container';
-import { query } from '../api';
+import { getList } from '../api';
 import { updateQuestionList } from '../actions';
 
 class QuestionsPanel extends Container {
@@ -12,7 +12,7 @@ class QuestionsPanel extends Container {
     const {store} = this.context;
     const { type } = this.props;
     if (!this.state[type]) {
-      query(type)
+      getList(type)
         .then(questions => {
           store.dispatch(updateQuestionList(type, questions));
         });
@@ -21,7 +21,7 @@ class QuestionsPanel extends Container {
 
   render() {
     const { type } = this.props;
-    const questions = this.state[type];
+    const questions = this.state.lists[type];
 
     if (!questions) {
       return <div className="question-list">
