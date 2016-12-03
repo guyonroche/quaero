@@ -37,7 +37,7 @@ const parseResponse = response => {
   }
 };
 
-const fch = (url, method, headers, body) => {
+const fch = (url, method = 'GET', headers, body) => {
   if (body === undefined) {
     body = headers;
     headers = undefined;

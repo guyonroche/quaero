@@ -7,12 +7,12 @@ import Container from './container';
 
 // TODO: Could see about applying Redux principles to form state.
 class FormContainer extends Container {
-  constructor() {
+  constructor(props) {
     const xform = (previous, redux) => previous ?
       { form: previous.form || {}, redux} :
       { form: {}, redux};
 
-    super(xform);
+    super(props, xform);
   }
 
   setFormState(form) {

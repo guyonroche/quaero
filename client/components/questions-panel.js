@@ -4,17 +4,18 @@ import { getList } from '../api';
 import { updateQuestionList } from '../actions';
 
 class QuestionsPanel extends Container {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   componentWillMount() {
-    const {store} = this.context;
+    super.componentWillMount();
+
     const { type } = this.props;
-    if (!this.state[type]) {
+    if (!this.state.lists[type].length) {
       getList(type)
-        .then(questions => {
-          store.dispatch(updateQuestionList(type, questions));
+        .then(({questions}) => {
+          this.dispatch(updateQuestionList(type, questions));
         });
     }
   }
@@ -23,21 +24,26 @@ class QuestionsPanel extends Container {
     const { type } = this.props;
     const questions = this.state.lists[type];
 
-    if (!questions) {
+    if (questions) {
+      return (
+        <div className="question-list">
+          {
+            questions.map(question => (
+              <div className="question-item">
+                <div>{question.title}</div>
+                <div>{question.tags}</div>
+              </div>
+            ))
+          }
+        </div>
+      );
+    } else {
       return <div className="question-list">
         Loading {type} questions...
       </div>
     }
-
-    return (
-      <div className="question-list">
-        List of {type} questions go here
-      </div>
-    );
   }
 }
-QuestionsPanel.contextTypes = {
-  store: React.PropTypes.object
-};
+
 
 export default QuestionsPanel;

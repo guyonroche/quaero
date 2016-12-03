@@ -9,8 +9,8 @@ import AskPanel from './ask-panel';
 import SearchPanel from './search-panel';
 
 class Home extends Container {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {

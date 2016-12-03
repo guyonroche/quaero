@@ -33,18 +33,17 @@ const LoggedInHeader = ({user, onLogout}) => (
 );
 
 class Header extends Container {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   
   render() {
-    const { store } = this.context;
     const { user } = this.state;
 
     if (user && user.username) {
       const onLogout = () => {
         logout()
-          .then(() => store.dispatch(loggedOut()))
+          .then(() => this.dispatch(loggedOut()))
       };
 
       return (
@@ -56,15 +55,13 @@ class Header extends Container {
     } else {
       return (
         <AnonHeader
-          onSignup={() => store.dispatch(openModal('sign-up'))}
-          onLogin={() => store.dispatch(openModal('login'))}
+          onSignup={() => this.dispatch(openModal('sign-up'))}
+          onLogin={() => this.dispatch(openModal('login'))}
         />
       );
     }
   }
 }
-Header.contextTypes = {
-  store: React.PropTypes.object
-};
+
 
 export default Header;

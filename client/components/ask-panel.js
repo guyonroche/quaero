@@ -65,8 +65,8 @@ const AskForm = ({onPost, onValidate, titleError, textError, formError}) => {
 };
 
 class AskPanel extends FormContainer {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     
     this.onPost = this.onPost.bind(this);
     this.onValidatePost = this.onValidatePost.bind(this);
@@ -133,18 +133,18 @@ class AskPanel extends FormContainer {
       ask(title, tags, text)
         .then(({quid}) => {
           const {store} = this.context;
-          store.dispatch(showQuestion({quid, title, tags, text}));
+          this.dispatch(showQuestion({quid, title, tags, text}));
         });
     }
   }
   
   onSignup() {
     const {store} = this.context;
-    store.dispatch(openModal('sign-up'))
+    this.dispatch(openModal('sign-up'))
   }
   onLogin() {
     const {store} = this.context;
-    store.dispatch(openModal('login'))
+    this.dispatch(openModal('login'))
   }
 
   render() {
@@ -156,8 +156,5 @@ class AskPanel extends FormContainer {
       <UserWall onSignup={this.onSignup} onLogin={this.onLogin} />;
   }
 }
-AskPanel.contextTypes = {
-  store: React.PropTypes.object
-};
 
 export default AskPanel;

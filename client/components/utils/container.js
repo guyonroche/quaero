@@ -6,10 +6,15 @@ import React, { Component } from 'react';
 // to be extended.
 
 class Container extends Component {
-  constructor(xform) {
-    super();
+  constructor(props, xform) {
+    super(props);
     
     this.xform = xform || ((previous, state) => state);
+  }
+
+  dispatch(action) {
+    const {store} = this.context;
+    store.dispatch(action);
   }
 
   componentWillMount() {
@@ -28,5 +33,8 @@ class Container extends Component {
     this.unsubscribe();
   }
 }
+Container.contextTypes = {
+  store: React.PropTypes.object
+};
 
 export default Container;
