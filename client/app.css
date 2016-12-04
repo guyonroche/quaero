@@ -109,9 +109,23 @@ body {
 
 }
 .question-tag {
-    background: #536364;
-    border: 1px solid #303434;
+    background: #d8d0d0;
+    border: 1px solid #e8e0e0;
     cursor: pointer;
     margin: 5px;
     display: inline;
+}
+
+.question-list {
+}
+
+.question-list-item {
+    cursor: pointer;
+    border-bottom: 1px solid gray;
+    padding: 5px;
+}
+.question-list-title {
+    font-size: large;
+    font-weight: bold;
+    padding: 2px;
 }

@@ -22,17 +22,23 @@ class Home extends Container {
 
     const { questions } = this.state;
 
+    const showQuestion = this.state.showQuestion;
+    const questionIndex = showQuestion ?
+      questions.findIndex(question => question.quid === showQuestion) : -1;
+    const tabIndex = questionIndex !== -1 ? 4 + questionIndex : 0;
+
+
     // Cool UX - to view a question, add a tab for it here!!!
     // TODO: store list of 'watched' questions on user info in svr
     return (
       <div className="app-main">
-        <Tabs onSelect={handleSelect} selectedIndex={0}>
+        <Tabs onSelect={handleSelect} selectedIndex={tabIndex}>
           <TabList>
             <Tab>Top</Tab>
             <Tab>Recent</Tab>
             <Tab>Search</Tab>
             <Tab>Ask</Tab>
-            { questions.map(question => <Tab>{shorten(question.title)}</Tab>) }
+            { questions.map(question => <Tab key={`tab-${question.quid}`} >{shorten(question.title)}</Tab>) }
           </TabList>
 
           <TabPanel>
@@ -49,7 +55,7 @@ class Home extends Container {
           </TabPanel>
           {
             questions.map(question => (
-              <TabPanel>
+              <TabPanel key={`tab-panel-${question.quid}`}>
                 <QuestionPanel question={question} />
               </TabPanel>
             ))

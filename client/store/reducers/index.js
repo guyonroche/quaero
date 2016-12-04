@@ -4,6 +4,7 @@ import user from './user';
 import modal from './modal';
 import questions from './questions';
 import lists from './lists';
+import showQuestion from './show-question';
 
 const app = combineReducers({
 
@@ -19,7 +20,10 @@ const app = combineReducers({
 
   // lists are the questions fetched by queries
   // E.g. top, recent, search, etc
-  lists
+  lists,
+
+  // a hint to the tab panel as to which tab to show initially
+  showQuestion,
 });
 
 export default app;

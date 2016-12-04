@@ -82,3 +82,7 @@ export const ask = (title, tags, text) => {
 export const getList = (type) => {
   return fch(`/api/list/${type}`);
 };
+
+export const getQuestion = (quid) => {
+  return fch(`/api/question/${quid}`);
+}
