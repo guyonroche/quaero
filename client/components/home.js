@@ -38,7 +38,11 @@ class Home extends Container {
             <Tab>Recent</Tab>
             <Tab>Search</Tab>
             <Tab>Ask</Tab>
-            { questions.map(question => <Tab key={`tab-${question.quid}`} >{shorten(question.title)}</Tab>) }
+            {
+              questions.map(question => (
+                <Tab key={`tab-${question.quid}`} >{shorten(question.title)}</Tab>
+              ))
+            }
           </TabList>
 
           <TabPanel>
@@ -61,8 +65,6 @@ class Home extends Container {
             ))
           }
         </Tabs>
-
-
       </div>
     );
   }

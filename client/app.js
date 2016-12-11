@@ -12,7 +12,7 @@ import Question from './components/question';
 const App = () => (
   <div>
     <Dialogs />
-    
+
     <Header />
 
     <Router history={hashHistory}>

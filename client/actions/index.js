@@ -1,4 +1,3 @@
-import * as api from '../api';
 
 export const loggedIn = (username) => ({
   type: 'LOGGED_IN',

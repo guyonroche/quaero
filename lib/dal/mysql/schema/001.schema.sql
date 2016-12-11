@@ -40,3 +40,15 @@ CREATE TABLE `question_tags` (
   UNIQUE KEY `qt_idx` (`tag`,`question_id`),
   KEY `quid` (`question_id`)
 );
+
+
+CREATE TABLE `quaero_watch` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `question_id` BIGINT NOT NULL,
+  `last_modified` DATETIME NOT NULL,
+  `watching` TINYINT ZEROFILL NOT NULL,
+  `viewing` TINYINT ZEROFILL NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_id_idx` (`user_id` ASC));
+
