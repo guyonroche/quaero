@@ -19,7 +19,6 @@ CREATE TABLE `quaero_session` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC));
 
-
 CREATE TABLE `question` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `quid` VARCHAR(32) NOT NULL,
@@ -41,14 +40,14 @@ CREATE TABLE `question_tags` (
   KEY `quid` (`question_id`)
 );
 
-
 CREATE TABLE `quaero_watch` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
-  `question_id` BIGINT NOT NULL,
+  `quid` VARCHAR(32) NOT NULL,
   `last_modified` DATETIME NOT NULL,
   `watching` TINYINT ZEROFILL NOT NULL,
   `viewing` TINYINT ZEROFILL NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `user_id_idx` (`user_id` ASC));
+  INDEX `user_id_idx` (`user_id` ASC),
+  UNIQUE INDEX `user_quid_idx` (`user_id` ASC, `quid` ASC));
 

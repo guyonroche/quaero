@@ -1,131 +1,139 @@
 :root {
-    font-size: 16px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
 }
 body {
-    background: #bdc3c7;
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
+  background: #bdc3c7;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .header-bar {
-    display: flex;
-    width: 100%
+  display: flex;
+  width: 100%;
 }
 
 .app-header-title {
-    color: blue;
-    font-size: 32px;
-    font-weight: 800;
-    width: 20%;
+  color: blue;
+  font-size: 32px;
+  font-weight: 800;
+  width: 20%;
 }
 
 .app-header-nav {
-    width: 80%;
-    text-decoration: none;
-    color: blue;
-    font-size: 18px;
-    font-weight: 600;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    padding-right: 10px;
+  width: 80%;
+  text-decoration: none;
+  color: blue;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 10px;
 }
 .app-header-nav li {
-    margin-left: 15px;
-    cursor: pointer;
+  margin-left: 15px;
+  cursor: pointer;
 }
 .app-header-nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
 }
 
 .app-main {
-    min-height: 200px;
+  min-height: 200px;
 }
 
 .form-row {
-    width: 800px;
-    float: left;
-    clear: left;
+  width: 800px;
+  float: left;
+  clear: left;
 }
 
 .form-label {
-    float: left;
-    width: 150px;
-    height: 30px;
-    text-align: right;
-    margin-right: 10px;
-    font-weight: bold;
+  float: left;
+  width: 150px;
+  height: 30px;
+  text-align: right;
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 .form-input {
-    float: left;
-    width: 610px;
+  float: left;
+  width: 610px;
 }
 .form-error {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 .form-error-box {
-    padding: 5px;
+  padding: 5px;
 }
 
 .form-full-row {
-    float: left;
-    width: 800px;
+  float: left;
+  width: 800px;
 }
 
 .form-element {
-    width: 100%;
+  width: 100%;
 }
 
 .form-text {
-    min-height: 100px;
+  min-height: 100px;
 }
 
 .form-right {
-    float: right;
+  float: right;
 }
 
 .question-header {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }
 .question-title {
-    font-size: larger;
-    font-weight: bold;
-    display: inline;
+  font-size: larger;
+  font-weight: bold;
+  display: inline;
+}
+.question-watch {
+  display: inline;
+  float: right;
 }
 .question-close {
-    display: inline;
-    float: right;
+  display: inline;
+  float: right;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 3px;
+  border: 1px solid red;
 }
 .question-post {
-    white-space: pre-wrap;
+  white-space: pre-wrap;
 }
 .question-tags {
 
 }
 .question-tag {
-    background: #e0d8da;
-    border: 1px solid #f0e8ea;
-    cursor: pointer;
-    margin: 5px;
-    display: inline;
+  background: #e0d8da;
+  border: 1px solid #f0e8ea;
+  cursor: pointer;
+  margin: 5px;
+  display: inline;
 }
 
 .question-list {
 }
 
 .question-list-item {
-    cursor: pointer;
-    border-bottom: 1px solid gray;
-    padding: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid gray;
+  padding: 5px;
 }
 .question-list-title {
-    font-size: large;
-    font-weight: bold;
-    padding: 2px;
+  font-size: large;
+  font-weight: bold;
+  padding: 2px;
 }

@@ -14,7 +14,7 @@ class QuestionsPanel extends Container {
     const { type } = this.props;
     if (!this.state.lists[type].length) {
       getList(type)
-        .then(({questions}) => {
+        .then(questions => {
           this.dispatch(updateQuestionList(type, questions));
         });
     }
@@ -22,7 +22,7 @@ class QuestionsPanel extends Container {
 
   viewQuestion(quid) {
     getQuestion(quid)
-      .then(({question}) => {
+      .then(question => {
         this.dispatch(showQuestion(question));
       });
   }

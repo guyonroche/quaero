@@ -21,20 +21,6 @@ const parseResponse = response => {
     }, () => {
       throw new Error('Something went wrong');
     });
-
-  try {
-    const json = response.json();
-    if (response.status >= 400) {
-      let error = new Error(json.error);
-      error.status = response.status;
-      throw new Error(json.error);
-    } else {
-      return json;
-    }
-  }
-  catch(error) {
-    throw new Error('Something went wrong');
-  }
 };
 
 const fch = (url, method = 'GET', headers, body) => {
@@ -63,7 +49,7 @@ export const login = (username, password) => {
 };
 
 export const logout = () => {
-  return fch(`/api/user/logout`, 'POST', {sid}, undefined)
+  return fch(`/api/user/logout`, 'POST', {sid}, null)
     .then(() => sid = undefined)
     .catch(error => {
       if (error.status === 401) {
@@ -85,4 +71,32 @@ export const getList = (type) => {
 
 export const getQuestion = (quid) => {
   return fch(`/api/question/${quid}`);
-}
+};
+
+// ============================================================================
+export const getWatching = () => {
+  return fch(`/api/watch/watching`, 'GET', {sid}, null);
+};
+export const addWatching = (quid) => {
+  return fch(`/api/watch/watching/${quid}`, 'PUT', {sid}, null);
+};
+export const removeWatching = (quid) => {
+  return fch(`/api/watch/watching/${quid}`, 'DELETE', {sid}, null);
+};
+
+export const getViewing = () => {
+  return fch(`/api/watch/viewing`, 'GET', {sid}, null);
+};
+export const addViewing = (quid) => {
+  return fch(`/api/watch/viewing/${quid}`, 'PUT', {sid}, null);
+};
+export const removeViewing = (quid) => {
+  return fch(`/api/watch/viewing/${quid}`, 'DELETE', {sid}, null);
+};
+
+export const getHistory = () => {
+  return fch(`/api/watch/history`, 'GET', {sid}, null);
+};
+export const clearHistory = () => {
+  return fch(`/api/watch/history`, 'DELETE', {sid}, null);
+};

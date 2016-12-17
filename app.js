@@ -1,16 +1,15 @@
 'use strict';
 
-let path = require('path');
+const path = require('path');
 
-let express = require('express');
-let url = require('url');
-let bodyParser = require('body-parser');
+const express = require('express');
+const url = require('url');
+const bodyParser = require('body-parser');
 
-let pkg = require('./package.json');
-let config = require('./app.json');
+const config = require('./app.json');
 
-let DAL = require('./lib/dal');
-let router = require('./lib/router');
+const DAL = require('./lib/dal');
+const router = require('./lib/router');
 
 // must create dal before anything else tries to use it.
 let dal = DAL.createDal(config.db);
