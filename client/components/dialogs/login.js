@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 
-import { login } from '../../api';
-import { closeModal, addModalData, loggedIn } from '../../actions';
+import { logIn, closeModal } from '../../actions';
 
 const Login = ({onLogin, onCancel, errorMessage}) => {
   let username, password;
@@ -46,25 +45,14 @@ let mapStateToProps = state => ({
 
 let mapDispatchToProps = dispatch => ({
   onLogin(username, password) {
-    // cheap validation
-    if (!username) {
-      return dispatch(addModalData({error: 'Username is empty'}));
-    }
-    if (!password) {
-      return dispatch(addModalData({error: 'Password is empty'}));
-    }
-    // all good so go for it
-    login(username, password)
-      .then(result => dispatch(loggedIn(username)))
-      .then(() => dispatch(closeModal()))
-      .catch(error => dispatch(addModalData({error: error.message})))
+    dispatch(logIn(username, password, closeModal()));
   },
   onCancel() {
     dispatch(closeModal());
   }
 });
 
- let LoginModal = connect(
+let LoginModal = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Login);

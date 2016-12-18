@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 
-import { register } from '../../api';
-import { closeModal, setModalData, addModalData, loggedIn } from '../../actions';
+import { register, closeModal } from '../../actions';
 
 const Signup = ({onSignup, onCancel, errorMessage}) => {
   let username, password, confirm;
@@ -46,22 +45,7 @@ let mapStateToProps = state => ({
 
 let mapDispatchToProps = dispatch => ({
   onSignup(username, password, confirm) {
-    // cheap validation
-    if (!username) {
-      return dispatch(addModalData({error: 'You must choose a username'}));
-    }
-    if (!password || password.length < 8) {
-      return dispatch(addModalData({error: 'Password must be at least 8 chars'}));
-    }
-    if (password !== confirm) {
-      return dispatch(addModalData({error: `Password and confirm don't match`}));
-    }
-
-    // all good so go for it
-    register(username, password)
-      .then(result => dispatch(loggedIn(username, result.sid)))
-      .then(() => dispatch(closeModal()))
-      .catch(error => dispatch(addModalData({error: error.message})))
+    dispatch(register(username, password, confirm, closeModal()));
   },
   onCancel() {
     dispatch(closeModal());

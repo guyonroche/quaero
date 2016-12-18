@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import Container from './utils/container';
-import { hideQuestion } from '../actions';
-import { addWatching, removeWatching, addViewing, removeViewing } from '../api';
+import { closeQuestion, watchQuestion } from '../actions';
 
 class QuestionPanel extends Container {
   constructor(props) {
@@ -14,32 +13,13 @@ class QuestionPanel extends Container {
 
   onClose() {
     const { question } = this.props;
-    const { user } = this.state;
-
-    this.dispatch(hideQuestion(question.quid));
-    if(user && user.username) {
-      removeViewing(question.quid);
-    }
+    this.dispatch(closeQuestion(question.quid));
   }
 
   onWatch(e) {
     const { question } = this.props;
     const watching = !!e.target.checked;
-    if (watching) {
-      addWatching(question.quid);
-    } else {
-      removeWatching(question.quid);
-    }
-  }
-
-  componentWillMount() {
-    super.componentWillMount();
-
-    const { question } = this.props;
-    const {user} = this.state;
-    if (user && user.username) {
-      addViewing(question.quid);
-    }
+    this.dispatch(watchQuestion(question.quid, watching));
   }
 
   render() {
@@ -50,14 +30,6 @@ class QuestionPanel extends Container {
       <div>
         <div className="question-header">
           <div className="question-title">{question.title}</div>
-          {
-            user && user.username ? (
-              <div className="question-watch">
-                Watch:
-                <input type="checkbox" onChange={this.onWatch}/>
-              </div>
-            ) : null
-          }
           <div className="question-close" onClick={this.onClose}>X</div>
         </div>
         <div className="question-post">{question.text}</div>
@@ -68,6 +40,14 @@ class QuestionPanel extends Container {
             ))
           }
         </div>
+        {
+          user && user.username ? (
+              <div className="question-watch">
+                Watch:
+                <input type="checkbox" onChange={this.onWatch} defaultChecked={question.watching}/>
+              </div>
+            ) : null
+        }
       </div>
     );
   }

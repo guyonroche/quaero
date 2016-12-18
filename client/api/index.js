@@ -24,10 +24,6 @@ const parseResponse = response => {
 };
 
 const fch = (url, method = 'GET', headers, body) => {
-  if (body === undefined) {
-    body = headers;
-    headers = undefined;
-  }
   return fetch(url, {
       method,
       body: body && JSON.stringify(body),
@@ -43,19 +39,17 @@ export const register = (username, password) => {
 };
 
 export const login = (username, password) => {
-  return fch(`/api/user/login`, 'POST', { username, password })
+  return fch(`/api/user/login`, 'POST', undefined, { username, password })
     .then(response => sid = response.sid)
     .then(() => undefined); // hide the sid
 };
 
 export const logout = () => {
-  return fch(`/api/user/logout`, 'POST', {sid}, null)
+  return fch(`/api/user/logout`, 'POST', {sid})
     .then(() => sid = undefined)
     .catch(error => {
-      if (error.status === 401) {
-        // if already not logged in, no problem
-        return;
-      } else {
+      // if already not logged in, no problem
+      if (error.status !== 401) {
         throw error;
       }
     });
@@ -75,28 +69,28 @@ export const getQuestion = (quid) => {
 
 // ============================================================================
 export const getWatching = () => {
-  return fch(`/api/watch/watching`, 'GET', {sid}, null);
+  return fch(`/api/watch/watching`, 'GET', {sid});
 };
 export const addWatching = (quid) => {
-  return fch(`/api/watch/watching/${quid}`, 'PUT', {sid}, null);
+  return fch(`/api/watch/watching/${quid}`, 'PUT', {sid});
 };
 export const removeWatching = (quid) => {
-  return fch(`/api/watch/watching/${quid}`, 'DELETE', {sid}, null);
+  return fch(`/api/watch/watching/${quid}`, 'DELETE', {sid});
 };
 
 export const getViewing = () => {
-  return fch(`/api/watch/viewing`, 'GET', {sid}, null);
+  return fch(`/api/watch/viewing`, 'GET', {sid});
 };
 export const addViewing = (quid) => {
-  return fch(`/api/watch/viewing/${quid}`, 'PUT', {sid}, null);
+  return fch(`/api/watch/viewing/${quid}`, 'PUT', {sid});
 };
 export const removeViewing = (quid) => {
-  return fch(`/api/watch/viewing/${quid}`, 'DELETE', {sid}, null);
+  return fch(`/api/watch/viewing/${quid}`, 'DELETE', {sid});
 };
 
 export const getHistory = () => {
-  return fch(`/api/watch/history`, 'GET', {sid}, null);
+  return fch(`/api/watch/history`, 'GET', {sid});
 };
 export const clearHistory = () => {
-  return fch(`/api/watch/history`, 'DELETE', {sid}, null);
+  return fch(`/api/watch/history`, 'DELETE', {sid});
 };

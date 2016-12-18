@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import FormContainer from './utils/form-container';
 
-import { ask } from '../api';
-import { openModal, showQuestion } from '../actions';
+import { openModal, askQuestion } from '../actions';
 
 const UserWall = ({onSignup, onLogin}) => (
   <div>
@@ -130,20 +129,14 @@ class AskPanel extends FormContainer {
     }
 
     if (!form.formError) {
-      ask(title, tags, text)
-        .then(({quid}) => {
-          const {store} = this.context;
-          this.dispatch(showQuestion({quid, title, tags, text}));
-        });
+      this.dispatch(askQuestion(title, tags, text));
     }
   }
   
   onSignup() {
-    const {store} = this.context;
     this.dispatch(openModal('sign-up'))
   }
   onLogin() {
-    const {store} = this.context;
     this.dispatch(openModal('login'))
   }
 

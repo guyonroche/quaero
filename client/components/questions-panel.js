@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Container from './utils/container';
-import { getList, getQuestion } from '../api';
-import { updateQuestionList, showQuestion } from '../actions';
+import { openQuestion, getQuestionList } from '../actions';
 
 class QuestionsPanel extends Container {
   constructor(props) {
@@ -13,18 +12,12 @@ class QuestionsPanel extends Container {
 
     const { type } = this.props;
     if (!this.state.lists[type].length) {
-      getList(type)
-        .then(questions => {
-          this.dispatch(updateQuestionList(type, questions));
-        });
+      this.dispatch(getQuestionList(type));
     }
   }
 
   viewQuestion(quid) {
-    getQuestion(quid)
-      .then(question => {
-        this.dispatch(showQuestion(question));
-      });
+    this.dispatch(openQuestion(quid));
   }
 
   render() {

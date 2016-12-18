@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Container from './utils/container';
 
-import { openModal, loggedOut } from '../actions';
-import { logout } from '../api';
+import { openModal, logOut } from '../actions';
 
 const AnonHeader = ({onSignup, onLogin}) => (
   <div className="header-bar">
@@ -41,15 +40,10 @@ class Header extends Container {
     const { user } = this.state;
 
     if (user && user.username) {
-      const onLogout = () => {
-        logout()
-          .then(() => this.dispatch(loggedOut()))
-      };
-
       return (
         <LoggedInHeader
           user={user}
-          onLogout={onLogout}
+          onLogout={() => this.dispatch(logOut())}
         />
       );
     } else {
