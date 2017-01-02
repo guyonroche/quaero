@@ -67,6 +67,10 @@ export const getQuestion = (quid) => {
   return fch(`/api/question/${quid}`);
 };
 
+export const answerQuestion = (quid, text) => {
+  return fch(`/api/answer/${quid}`, 'POST', {sid}, {text});
+};
+
 // ============================================================================
 export const getWatching = () => {
   return fch(`/api/watch/watching`, 'GET', {sid});

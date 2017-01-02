@@ -31,13 +31,23 @@ CREATE TABLE `question` (
   UNIQUE KEY `quid_UNIQUE` (`quid`)
 );
 
+CREATE TABLE `answer` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `question_id` BIGINT NOT NULL,
+  `created` DATETIME NOT NULL,
+  `user_id` BIGINT NOT NULL,
+  `text` TEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `question_id_idx` (`question_id`)
+);
+
 CREATE TABLE `question_tags` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `question_id` BIGINT NOT NULL,
   `tag` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `qt_idx` (`tag`,`question_id`),
-  KEY `quid` (`question_id`)
+  KEY `question_id_idx` (`question_id`)
 );
 
 CREATE TABLE `quaero_watch` (

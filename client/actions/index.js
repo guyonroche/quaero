@@ -38,6 +38,21 @@ const watchingQuestion = (quid, active) => ({
   active
 });
 
+const saveViewing = (dispatch, getState) => {
+  // after login - ensure currently viewed questions are in watch list
+  const { questions } = getState();
+  return Promise.all(
+    questions.map(question => api.addViewing(question.quid))
+  ).catch(() => {})
+};
+const loadViewing = (dispatch, getState) => {
+  // after login - get the current view list and show them
+  api.getViewing()
+    .then(quids => {
+      quids.forEach(quid => dispatch(openQuestion(quid)));
+    });
+};
+
 export const logIn = (username, password, next) => (dispatch, getState) => {
   // TODO: better state management here - 'session' section? errors?
   // TODO: move sid to redux - control it here
@@ -55,6 +70,8 @@ export const logIn = (username, password, next) => (dispatch, getState) => {
   api.login(username, password)
     .then(result => dispatch(loggedIn(username)))
     .then(() => dispatch(next))
+    .then(() => saveViewing(dispatch, getState))
+    .then(() => loadViewing(dispatch, getState))
     .catch(error => dispatch(addModalData({error: error.message})));
 };
 
@@ -125,4 +142,9 @@ export const getQuestionList = (type ) => (dispatch, getState) => {
 export const watchQuestion = (quid, active) => (dispatch, getState) => {
   (active ? api.addWatching(quid) : api.removeWatching(quid))
     .then(() => dispatch(watchingQuestion(quid, active)));
+};
+
+export const answerQuestion = (quid, text) => (dispatch, getState) => {
+  api.answerQuestion(quid, text)
+    .then(() => dispatch(openQuestion(quid)))
 };
